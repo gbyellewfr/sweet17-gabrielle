@@ -666,7 +666,8 @@ async function submitRSVP(){
   btn.innerText = "SENDING...";
   btn.disabled = true;
 
-  const formData = new FormData();
+  // MENGGUNAKAN URLSearchParams AGAR BISA TERBACA OLEH GOOGLE SCRIPT
+  const formData = new URLSearchParams();
   formData.append('Name', state.name);
   formData.append('Attendance', state.attendance);
   formData.append('Main', state.attendance === "yes" ? state.main : "-");
