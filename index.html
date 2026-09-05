@@ -4,6 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Gabrielle's XVII Page — Oceanic Realm</title>
+<!-- META TAGS UNTUK PREVIEW WHATSAPP & SOSMED -->
+  <meta property="og:title" content="Gabrielle's 17th Birthday — Oceanic Realm" />
+  <meta property="og:description" content="You're invited to celebrate Gabrielle's new chapter. Let's make this chapter one to remember!" />
+  <meta property="og:image" content="https://gbyellewfr.github.io/sweet17-gabrielle/img/thumbnail.png" />
+  <meta property="og:url" content="https://gbyellewfr.github.io/sweet17-gabrielle/" />
+  <meta property="og:type" content="website" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Pinyon+Script&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -668,8 +674,8 @@ async function submitRSVP(){
 
   try {
     // Kirim data ke API Google Sheets
-    await fetch(scriptURL, { method: 'POST', body: formData });
-    
+    await fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' });
+
     // Setelah sukses, langsung arahkan ke halaman thank you
     goTo(state.attendance === "yes" ? "success-yes" : "success-no");
     document.getElementById("backLink").style.display = "none";
