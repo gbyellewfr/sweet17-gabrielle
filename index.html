@@ -393,13 +393,13 @@
     .corner { width: 95px !important; }
     
     /* Kerang atas diturunkan agar lebih nempel ke kartu */
+/* Kerang atas ditarik ke luar */
     .corner.tl { top: -5px; left: -20px; }
-    
-    .corner.tr { top: 5%; right: -20px; width }
-    
+    .corner.tr { top: 5%; right: -20px; }
+
     /* Mutiara HP dibuat jauh lebih kecil (65px) */
     .corner.bl { bottom: 14%; left: -15px; width: 65px !important; }
-    
+
     .corner.br { bottom: -20px; right: -15px; }
 
     /* Penyesuaian teks agar presisi di HP */
@@ -413,8 +413,8 @@
     .hero-visual { width: 145px; height: 195px; margin: 0 auto 20px auto; }
     .hero-visual .frame-num { font-size: 30px; }
     .hero-visual .frame-sub { font-size: 8px; margin-top: 3px; }
-  }
-
+  } /* <--- INI KURUNG PENUTUP YANG BIKIN ERROR TADI */
+  
   /* 2. TABLET & iPAD */
  @media (min-width: 481px) and (max-width: 820px) {
     body { padding: 40px 20px; }
