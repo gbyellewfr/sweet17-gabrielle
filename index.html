@@ -732,25 +732,15 @@ function tickCountdown(){
   document.getElementById("cd-s").textContent = s;
 }
 
-const bgMusic = document.getElementById("bgMusic");
-
-// Lagu langsung otomatis menyala saat tamu klik "OPEN INVITATION"
-document.querySelector('button[onclick="goTo(\'welcome\')"]').addEventListener("click", function() {
-  bgMusic.play();
-});
-
-// Fungsi untuk tombol musik di pojok kanan atas
-document.getElementById("musicToggle").addEventListener("click", function(){
-  musicOn = !musicOn;
-  this.style.opacity = musicOn ? "1" : "0.55";
-  this.textContent = musicOn ? "♫" : "♪";
-  
-  if(musicOn){
-    bgMusic.play();
-  } else {
-    bgMusic.pause();
+// Lagu otomatis menyala saat layar diklik/disentuh pertama kali
+document.body.addEventListener("click", function() {
+  const lagu = document.getElementById("bgMusic");
+  if (lagu && lagu.paused) {
+    lagu.play().catch(function(error) {
+      console.log("Gagal memutar lagu:", error);
+    });
   }
-});
+}, { once: true });
 
 // Fungsi agar lagu otomatis menyala saat tombol "OPEN INVITATION" diklik
 document.querySelector('button[onclick="goTo(\'welcome\')"]').addEventListener("click", function() {
