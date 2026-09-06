@@ -733,7 +733,11 @@ function tickCountdown(){
 }
 
 const bgMusic = document.getElementById("bgMusic");
-let musicOn = false;
+
+// Lagu langsung otomatis menyala saat tamu klik "OPEN INVITATION"
+document.querySelector('button[onclick="goTo(\'welcome\')"]').addEventListener("click", function() {
+  bgMusic.play();
+});
 
 // Fungsi untuk tombol musik di pojok kanan atas
 document.getElementById("musicToggle").addEventListener("click", function(){
