@@ -742,13 +742,6 @@ document.body.addEventListener("click", function() {
   }
 }, { once: true });
 
-// Fungsi agar lagu otomatis menyala saat tombol "OPEN INVITATION" diklik
-document.querySelector('button[onclick="goTo(\'welcome\')"]').addEventListener("click", function() {
-  if(!musicOn) {
-    document.getElementById("musicToggle").click();
-  }
-});
-
 renderMenu();
 initNames(); // Memanggil fungsi untuk filter nama
 tickCountdown();
