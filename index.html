@@ -382,20 +382,19 @@
      FULL RESPONSIVE DESIGN (FIXED)
   ========================================= */
 
-  /* 1. KHUSUS HP (Otomatis menyesuaikan semua jenis HP) */
+/* 1. KHUSUS HP (Otomatis menyesuaikan semua jenis HP) */
   @media (max-width: 480px) {
     body { padding: 15px 10px; }
     
-    /* HANYA ubah padding, JANGAN ubah border-radius */
-    .card { padding: 60px 20px 30px; }
+    /* Padding atas dikurangi jadi 45px agar teks naik */
+    .card { padding: 45px 20px 30px; }
 
-/* Kecilkan ornamen & geser agak keluar agar teks tidak tertutup */
+    /* Kecilkan ornamen & geser mendekat ke kartu */
     .corner { width: 95px !important; }
     
-    /* Kerang atas diturunkan agar lebih nempel ke kartu */
-/* Kerang atas ditarik ke luar */
-    .corner.tl { top: -5px; left: -20px; }
-    .corner.tr { top: 5%; right: -20px; }
+    /* Kerang ditarik ke dalam dan agak turun biar pas di lengkungan */
+    .corner.tl { top: 5px; left: -10px; }
+    .corner.tr { top: 8%; right: -12px; }
 
     /* Mutiara HP dibuat jauh lebih kecil (65px) */
     .corner.bl { bottom: 14%; left: -15px; width: 65px !important; }
@@ -414,7 +413,7 @@
     .hero-visual .frame-num { font-size: 30px; }
     .hero-visual .frame-sub { font-size: 8px; margin-top: 3px; }
   } /* <--- INI KURUNG PENUTUP YANG BIKIN ERROR TADI */
-  
+
   /* 2. TABLET & iPAD */
  @media (min-width: 481px) and (max-width: 820px) {
     body { padding: 40px 20px; }
