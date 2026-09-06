@@ -481,7 +481,7 @@
       </div>
 
       <div class="tagline script">A New Page Begins</div>
-      <div class="date-line">13 · 09 · 2026 &nbsp;•&nbsp; VIANOTA COFFEE</div>
+      <div class="date-line">13 · 09 · 2026 &nbsp;•&nbsp; Elwood COFFEE</div>
       <button class="btn" onclick="goTo('welcome')">OPEN INVITATION</button>
     </section>
 
@@ -501,11 +501,11 @@
       <div class="badges">
         <div class="badge"><div class="label">DATE</div><div class="value">Sep 13, 2026</div></div>
         <div class="badge"><div class="label">TIME</div><div class="value">14.00 WIB</div></div>
-        <div class="badge"><div class="label">VENUE</div><div class="value">Vianota Coffee</div></div>
+        <div class="badge"><div class="label">VENUE</div><div class="value">Elwood Coffee</div></div>
         <div class="badge"><div class="label">DRESS CODE</div><div class="value">Beach & Ocean Theme</div></div>
       </div>
-      <p class="body-text">I'll be waiting for you at Vianota Café.</p>
-      <a class="maps-link" href="https://google.com/maps/place/vianota+cafe/data=!4m2!3m1!1s0x2dd6299ff6c534fb:0x8ebf7d2309e070a5?sa=X&ved=1t:242&ictx=111" target="_blank" rel="noopener">VIEW LOCATION</a>
+      <p class="body-text">I'll be waiting for you at Elwood Coffee.</p>
+      <a class="maps-link" href="https://maps.app.goo.gl/Nb4vkNY66Q8SQb6G7" target="_blank" rel="noopener">VIEW LOCATION</a>
       <button class="btn" style="margin-top:20px;" onclick="goTo('countdown')">CONTINUE</button>
     </section>
 
@@ -544,17 +544,6 @@
       <button class="btn" onclick="submitRSVP()">SEND RESPONSE</button>
     </section>
 
-    <!-- 6b. MENU -->
-    <section class="screen" data-screen="menu">
-      <div class="eyebrow">THE CELEBRATION MENU</div>
-      <h2 class="screen-title">Choose Your Feast</h2>
-      <div class="group-title">CHOOSE YOUR PREFERRED MAIN COURSE</div>
-      <div id="mainOptions"></div>
-      <div class="group-title">A SIP OF THE DAY</div>
-      <div id="drinkOptions"></div>
-      <button class="btn" id="menuNextBtn" onclick="goTo('confirm')" disabled>CONTINUE</button>
-    </section>
-
     <!-- 7. CONFIRM -->
     <section class="screen" data-screen="confirm">
       <div class="eyebrow">ONE LAST LOOK</div>
@@ -562,7 +551,6 @@
       <p class="body-text" style="font-size:13px;">Make sure everything looks right before sending your RSVP.</p>
       <div class="summary" id="summaryBox"></div>
       <button class="btn" onclick="submitRSVP()">SEND RSVP</button>
-      <button class="btn ghost" style="margin-top:8px;" onclick="goTo('menu')">EDIT</button>
     </section>
 
     <!-- 8a. SUCCESS - YES -->
@@ -588,11 +576,9 @@
 const scriptURL = 'https://script.google.com/macros/s/AKfycbxI-qNqVWkg6xHrtEbBj3OCB_WRgThpi3oEL0jHW-CnHoutVt1eoM41j9ejVTZT-4Gjkw/exec'; 
 
 const GUEST_LIST = ["Ciara","Meyra","Ganeisha","Queensha","Amell","Aulia","Sabrina","Grisli","Nabil","Nagata","Aldan","Dimas","Sakti","Marcell","Berlian","Ariel","Abi","Intan","Raya","Ilham","Bryan","Vaness","Athal","Ariq","Rama","Chalis","Elsa","Nola","Aurel","cobacoba"];
-const MAINS = ["Ayam Goreng","Ayam Panggang","Smokey Chicken","Mie Ayam Bakso"];
-const DRINKS = ["Lemon Tea","Lemon Grass","English Breakfast","Jasmine Tea","Mango Tea","Lychee Tea"];
 const TARGET_DATE = new Date("2026-09-13T14:00:00+07:00");
 
-let state = { name:null, attendance:null, main:null, drink:null };
+let state = { name:null, attendance:null };
 let history = ["cover"];
 
 function goTo(screenId, push=true){
@@ -619,32 +605,16 @@ function chooseAttendance(val){
   state.attendance = val;
   state.name = chosen;
   if(val === "yes"){
-    goTo("menu");
+    goTo("confirm"); // <--- ALUR BARU: Langsung ke halaman konfirmasi
   } else {
     goTo("decline");
   }
-}
-
-function renderMenu(){
-  const mainBox = document.getElementById("mainOptions");
-  const drinkBox = document.getElementById("drinkOptions");
-  mainBox.innerHTML = MAINS.map(m=>`<div class="option-card" data-val="${m}" onclick="selectOption('main','${m}',this)"><span>${m}</span><span class="dot"></span></div>`).join("");
-  drinkBox.innerHTML = DRINKS.map(d=>`<div class="option-card" data-val="${d}" onclick="selectOption('drink','${d}',this)"><span>${d}</span><span class="dot"></span></div>`).join("");
-}
-
-function selectOption(type, val, el){
-  state[type] = val;
-  el.parentElement.querySelectorAll(".option-card").forEach(c=>c.classList.remove("selected"));
-  el.classList.add("selected");
-  document.getElementById("menuNextBtn").disabled = !(state.main && state.drink);
 }
 
 function buildSummary(){
   document.getElementById("summaryBox").innerHTML = `
     <div class="summary-row"><span class="k">NAME</span><span>${state.name}</span></div>
     <div class="summary-row"><span class="k">ATTENDANCE</span><span>I'll be there</span></div>
-    <div class="summary-row"><span class="k">MAIN COURSE</span><span>${state.main}</span></div>
-    <div class="summary-row"><span class="k">DRINK</span><span>${state.drink}</span></div>
     <div class="summary-row"><span class="k">GUESTS</span><span>1 Guest</span></div>
   `;
 }
@@ -655,9 +625,7 @@ goTo = function(id, push){
   origGoTo(id, push);
 };
 
-// Fungsi untuk mengirim data ke Google Sheets
 async function submitRSVP(){
-  // Mencari tombol di halaman yang sedang aktif (confirm atau decline)
   const activeScreen = state.attendance === "yes" ? "confirm" : "decline";
   const btn = document.querySelector(`[data-screen="${activeScreen}"] button`);
   
@@ -665,18 +633,15 @@ async function submitRSVP(){
   btn.innerText = "SENDING...";
   btn.disabled = true;
 
-  // MENGGUNAKAN URLSearchParams AGAR BISA TERBACA OLEH GOOGLE SCRIPT
   const formData = new URLSearchParams();
   formData.append('Name', state.name);
   formData.append('Attendance', state.attendance);
-  formData.append('Main', state.attendance === "yes" ? state.main : "-");
-  formData.append('Drink', state.attendance === "yes" ? state.drink : "-");
+  // Dikirim strip (-) agar format tabel Google Sheets kamu tidak error/bergeser
+  formData.append('Main', '-');
+  formData.append('Drink', '-');
 
   try {
-    // Kirim data ke API Google Sheets
     await fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' });
-
-    // Setelah sukses, langsung arahkan ke halaman thank you
     goTo(state.attendance === "yes" ? "success-yes" : "success-no");
     document.getElementById("backLink").style.display = "none";
   } catch (error) {
@@ -693,21 +658,13 @@ function fillNameSelect(names){
     list.map(n=>`<option value="${n}">${n}</option>`).join("");
 }
 
-// Fungsi untuk mengecek nama-nama yang SUDAH RSVP di database
 async function initNames(){
-  // Isi dropdown dengan semua nama dulu sementara loading
   fillNameSelect(GUEST_LIST); 
-  
   try {
-    // Ambil daftar nama yang sudah RSVP dari API Sheets
     const response = await fetch(scriptURL);
     const data = await response.json();
     const submittedNames = data.submitted || [];
-    
-    // Filter/Hapus nama yang sudah mengisi dari daftar
     const availableNames = GUEST_LIST.filter(n => !submittedNames.includes(n));
-    
-    // Perbarui dropdown hanya dengan nama yang belum mengisi
     fillNameSelect(availableNames);
   } catch (error) {
     console.error("Gagal mengecek nama yang sudah RSVP", error);
@@ -732,7 +689,7 @@ function tickCountdown(){
   document.getElementById("cd-s").textContent = s;
 }
 
-// Lagu otomatis menyala saat layar diklik/disentuh pertama kali
+// Lagu otomatis menyala saat layar diklik pertama kali
 document.body.addEventListener("click", function() {
   const lagu = document.getElementById("bgMusic");
   if (lagu && lagu.paused) {
@@ -742,8 +699,7 @@ document.body.addEventListener("click", function() {
   }
 }, { once: true });
 
-renderMenu();
-initNames(); // Memanggil fungsi untuk filter nama
+initNames(); 
 tickCountdown();
 setInterval(tickCountdown, 1000);
 </script>
