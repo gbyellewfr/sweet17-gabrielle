@@ -732,11 +732,27 @@ function tickCountdown(){
   document.getElementById("cd-s").textContent = s;
 }
 
+const bgMusic = document.getElementById("bgMusic");
 let musicOn = false;
+
+// Fungsi untuk tombol musik di pojok kanan atas
 document.getElementById("musicToggle").addEventListener("click", function(){
   musicOn = !musicOn;
   this.style.opacity = musicOn ? "1" : "0.55";
   this.textContent = musicOn ? "♫" : "♪";
+  
+  if(musicOn){
+    bgMusic.play();
+  } else {
+    bgMusic.pause();
+  }
+});
+
+// Fungsi agar lagu otomatis menyala saat tombol "OPEN INVITATION" diklik
+document.querySelector('button[onclick="goTo(\'welcome\')"]').addEventListener("click", function() {
+  if(!musicOn) {
+    document.getElementById("musicToggle").click();
+  }
 });
 
 renderMenu();
@@ -744,5 +760,8 @@ initNames(); // Memanggil fungsi untuk filter nama
 tickCountdown();
 setInterval(tickCountdown, 1000);
 </script>
+<audio id="bgMusic" loop>
+  <source src="lagu.mp3" type="audio/mpeg">
+</audio>
 </body>
 </html>
