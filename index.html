@@ -369,13 +369,13 @@
     cursor:pointer;
     z-index:3;
   }
-  .music-toggle{
+.music-toggle{
     position:absolute;
-    top:26px;right:26px;
-    font-size:16px;
+    top:26px;right:40px; /* Digeser sedikit ke kiri agar tidak menabrak kerang */
+    font-size:22px; /* Dibuat lebih besar agar mudah ditekan di HP */
     cursor:pointer;
-    z-index:3;
-    color:var(--ink-soft);
+    z-index:99; /* Dibuat angka 99 agar selalu berada Paling Depan menembus kerang */
+    color:var(--ink);
   }
 
   /* =========================================
